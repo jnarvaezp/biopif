@@ -7,6 +7,7 @@ Requeriments
 
 * Biopython (sudo pip install Biopython)
 * Python click (sudo pip install click)
+* pyfasta (sudo pip install pyfasta)
 * Hammer Package
 * Lastest Protein Database UniProt - SwissProt
 * Lastest Protein PFam Database
