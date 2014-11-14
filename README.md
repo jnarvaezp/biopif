@@ -18,3 +18,10 @@ Features
 * Export to Website
 * Create Documents MongoDB
 * R Integration -  Graph Protein Domain peer protein based in information from PFam Curated and PFam not curated
+
+
+Mac OS (homebrew)
+================
+
+$ brew tap homebrew/science
+$ brew install hmmer
