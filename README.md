@@ -1,5 +1,5 @@
-biopif
-======
+#biopif
+
 
 Bioinformatics tool Finder information using BioPython
 
@@ -20,8 +20,7 @@ Features
 * R Integration -  Graph Protein Domain peer protein based in information from PFam Curated and PFam not curated
 
 
-Mac OS (homebrew)
-================
+#Mac OS INSTALL (homebrew)
 
 $ brew tap homebrew/science
 $ brew install hmmer
