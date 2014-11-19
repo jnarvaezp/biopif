@@ -1,11 +1,26 @@
-biopif
-======
+#biopif
 
-Bioinformatics tool Finder informtaion using BioPython
+
+Bioinformatics tool Finder information using BioPython
+
+Requeriments
+
+* Biopython (sudo pip install Biopython)
+* Python click (sudo pip install click)
+* pyfasta (sudo pip install pyfasta)
+* Hammer Package
+* Lastest Protein Database UniProt - SwissProt
+* Lastest Protein PFam Database
 
 Features
 
-* Hmmer implementation
+* Hmmer implementation for analize proteome
 * Export to Website
 * Create Documents MongoDB
-* R Integration -  Finding Protein Domain
+* R Integration -  Graph Protein Domain peer protein based in information from PFam Curated and PFam not curated
+
+
+#Mac OS INSTALL (homebrew)
+
+$ brew tap homebrew/science
+$ brew install hmmer
