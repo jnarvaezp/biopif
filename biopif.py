@@ -1,6 +1,5 @@
 __author__ = 'gururea'
 
-import click
 import subprocess
 import re
 import sys
@@ -15,24 +14,23 @@ This is a main program and integrate all process, this process search informatio
 def messageHelp():
     print "---"
     print "BioPIF\n"
-    print "Usage: biopif <command> <arguments>"
+    print "Usage: biopif <command> <fasta_file>"
     print "---\n"
     print "Commands:\n"
-    print "install <name>[/<version>] [name2[/<version2>]] ... : install package(s)"
-    print "uninstall <name>[/<version>] : uninstall package"
-    print "activate <name>/<version> : activate installed package/version combo"
-    print "deactivate <name>/<version> : deactivate installed package/version combo"
-    print "list <name> : list installed packages"
-    print "search : list or search available packages"
+    print "hmmalign <fasta_file> : hmmer alignment to fasta file"
+    print "parserhmmscan <fasta_file> : Generate output Tabbed from output  hammer scan"
+    print "domain2graph <fasta_file> : Generate graph for family of proteins"
+    print "pfamscan <fasta_file> : Pfam scan protein with hmmer"
+    print "getUniProt-SwissProt : Get Latest Version UniProt-SwissProt"
+    print "getPFamCurated  : Get Latest Version Pfam Curated Database"
+    print "getPFamNoCurated : Get Latest Version Pfam Not Curated Database"
+    print "indexPFam : IndexPFam databases"
+    print "createjson : Create JSON Format"
     print "update : fetch updated recipes\n"
-    print "Options:\n"
-    print "--force, -f : do everything non-interactively"
-    print "--verbose, -v : print out more information"
     sys.exit()
 
 
-@click.command()
-@click.option('--hmmalign', default=1, help='Number of greetings.')
+
 def hmmalign():
     for seq_record in SeqIO.parse("tuberculosis.fa", "fasta"):
         perfil_hmm = seq_record.id + ".hmm"
@@ -45,8 +43,6 @@ def hmmalign():
         output = p.communicate()[0]
     print output
 
-
-@click.option('--parserhmmscan', default=1, help='Generate output Tabbed from output  hammer scan')
 def parserhmmscan():
     filename = (sys.argv[1])
     new_file = filename.replace(".tab", "")
@@ -74,8 +70,6 @@ def parserhmmscan():
             print protname, '\t', length, '\t', domname,
             print '\t', begin, '\t', end
 
-
-@click.option('--domain2graph', default=1, help='Generate graph for family of proteins')
 def homology_uniprot(input_proteome):
     if cmd_exists("hmmsearch") == "True":
         for seq_record in SeqIO.parse(input_proteome, "fasta"):
@@ -89,9 +83,17 @@ def homology_uniprot(input_proteome):
             output = p.communicate()[0]
             print  output
 
+def pfamScan(input_proteome):
+    if cmd_exists("hmmsearch") == "True":
+        for seq_record in SeqIO.parse(input_proteome, "fasta"):
+            perfil_hmm = seq_record.id + ".hmm"
+            proteina_fasta = seq_record.id
+            proteina_dbtl = seq_record.id + ".dbtl"
+            proteina_tblo = seq_record.id + ".tblo"
+            p = subprocess.Popen(['hmmscan',"--cpu=2","--domtblout",perfil_hmm,"Pfam-A.hmm",proteina_fasta], stdout=subprocess.PIPE)
+            output = p.communicate()[0]
+            print  output
 
-@click.option('--pfamhmmscan', default=1, help='Pfam Hmmer Scan')
-@click.option('--getUniProt-SwissProt', default=1, help='Get Latest Version UniProt-SwissProt')
 def uniprotswissprot():
     if cmd_exists("wget") == "True":
         URL_PFam = "ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz"
@@ -107,7 +109,6 @@ def uniprotswissprot():
         print "Houston we have a problems!"
 
 
-@click.option('--getPFamCurated', default=1, help='Pfam Hmmer Scan')
 def getPFam():
     if cmd_exists("wget") == "True":
         URL_PFam = "ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz"
@@ -121,8 +122,6 @@ def getPFam():
         print output
     print "Deberia estar listo"
 
-
-@click.option('--getPFamNoCurated', default=1, help='Pfam Not curated Hmmer profiles for Scan')
 def getPFam():
     if cmd_exists("wget") == "True":
         URL_PFam = "ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-B.hmm.gz"
@@ -156,14 +155,3 @@ def indexpfamb():
 def createjson():
     return 0
 
-
-@click.option('--count', default=1, help='Number of greetings.')
-@click.option('--name', prompt='Your name', help='The person to greet.')
-def hello(count, name):
-    """Simple program that greets NAME for a total of COUNT times."""
-    for x in range(count):
-        click.echo('Hello %s!' % name)
-
-
-if __name__ == '__main__':
-    getPFam()
