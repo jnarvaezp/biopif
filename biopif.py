@@ -153,6 +153,9 @@ def indexpfamb():
     output = indice.communicate()[0]
     print output
 
+def createjson():
+    return 0
+
 
 @click.option('--count', default=1, help='Number of greetings.')
 @click.option('--name', prompt='Your name', help='The person to greet.')
