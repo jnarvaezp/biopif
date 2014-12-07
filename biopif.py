@@ -12,6 +12,25 @@ This is a main program and integrate all process, this process search informatio
 '''
 
 
+def messageHelp():
+    print "---"
+    print "BioPIF\n"
+    print "Usage: biopif <command> <arguments>"
+    print "---\n"
+    print "Commands:\n"
+    print "install <name>[/<version>] [name2[/<version2>]] ... : install package(s)"
+    print "uninstall <name>[/<version>] : uninstall package"
+    print "activate <name>/<version> : activate installed package/version combo"
+    print "deactivate <name>/<version> : deactivate installed package/version combo"
+    print "list <name> : list installed packages"
+    print "search : list or search available packages"
+    print "update : fetch updated recipes\n"
+    print "Options:\n"
+    print "--force, -f : do everything non-interactively"
+    print "--verbose, -v : print out more information"
+    sys.exit()
+
+
 @click.command()
 @click.option('--hmmalign', default=1, help='Number of greetings.')
 def hmmalign():
@@ -20,10 +39,13 @@ def hmmalign():
         proteina_fasta = seq_record.id
         proteina_dbtl = seq_record.id + ".dbtl"
         proteina_tblo = seq_record.id + ".tblo"
-        p = subprocess.Popen(['hmmalign', '--domtblout', proteina_dbtl, '--tblout', proteina_tblo, perfil_hmm, 'uniprot_sprot.fasta'],
-        stdout = subprocess.PIPE)
+        p = subprocess.Popen(
+            ['hmmalign', '--domtblout', proteina_dbtl, '--tblout', proteina_tblo, perfil_hmm, 'uniprot_sprot.fasta'],
+            stdout=subprocess.PIPE)
         output = p.communicate()[0]
     print output
+
+
 @click.option('--parserhmmscan', default=1, help='Generate output Tabbed from output  hammer scan')
 def parserhmmscan():
     filename = (sys.argv[1])

@@ -12,6 +12,11 @@ Requeriments
 * Lastest Protein Database UniProt - SwissProt
 * Lastest Protein PFam Database
 
+Dependencies
+
+* BioPython
+* click
+
 Features
 
 * Hmmer implementation for analize proteome
