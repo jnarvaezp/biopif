@@ -19,19 +19,43 @@ def messageHelp():
     print "Commands:\n"
     print "hmmalign <fasta_file> : hmmer alignment to fasta file"
     print "parserhmmscan <fasta_file> : Generate output Tabbed from output  hammer scan"
-    print "domain2graph <fasta_file> : Generate graph for family of proteins"
+    print "**domain2graph <fasta_file> : Generate graph for family of proteins"
     print "pfamscan <fasta_file> : Pfam scan protein with hmmer"
     print "getUniProt-SwissProt : Get Latest Version UniProt-SwissProt"
     print "getPFamCurated  : Get Latest Version Pfam Curated Database"
     print "getPFamNoCurated : Get Latest Version Pfam Not Curated Database"
     print "indexPFam : IndexPFam databases"
-    print "createjson : Create JSON Format"
-    print "update : fetch updated recipes\n"
+    print "createjson : Create JSON Format\n"
     sys.exit()
+    if (sys.argv[1] == 'hmmalign'):
+        fasta = sys.argv[2]
+        hmmalign(fasta)
+    elif(sys.argv[1] == 'parserhmmscan'):
+        fasta = sys.argv[2]
+        parserhmmscan(fasta)
+    elif(sys.argv[1] == 'domain2graph'):
+        fasta = sys.argv[2]
+        homology_uniprot(fasta)
+    elif(sys.argv[1] == 'pfamscan'):
+        fasta = sys.argv[2]
+        pfamScan(fasta)
+    elif(sys.argv[1] == 'getUniProt-SwissProt'):
+        fasta = sys.argv[2]
+        uniprotswissprot()
+    elif(sys.argv[1] == 'getPFamCurated'):
+        fasta = sys.argv[2]
+        getPFam()
+    elif(sys.argv[1] == 'getPFamNoCurated'):
+        fasta = sys.argv[2]
+        getPFamB()
+    elif(sys.argv[1] == 'indexPFam'):
+        fasta = sys.argv[2]
+        indexpfama()
+    elif(sys.argv[1] == 'createjson'):
+        fasta = sys.argv[2]
+        createjson()
 
-
-
-def hmmalign():
+def hmmalign(fasta_file_name):
     for seq_record in SeqIO.parse("tuberculosis.fa", "fasta"):
         perfil_hmm = seq_record.id + ".hmm"
         proteina_fasta = seq_record.id
@@ -43,7 +67,7 @@ def hmmalign():
         output = p.communicate()[0]
     print output
 
-def parserhmmscan():
+def parserhmmscan(fasta_file_name):
     filename = (sys.argv[1])
     new_file = filename.replace(".tab", "")
     text_file = open(new_file + ".out", "wb")
@@ -122,7 +146,7 @@ def getPFam():
         print output
     print "Deberia estar listo"
 
-def getPFam():
+def getPFamB():
     if cmd_exists("wget") == "True":
         URL_PFam = "ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-B.hmm.gz"
         obternerPFam = subprocess.Popen(['wget', "-P databases/", URL_PFam], stdout=subprocess.PIPE)
